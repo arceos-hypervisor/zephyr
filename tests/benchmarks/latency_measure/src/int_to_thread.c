@@ -23,6 +23,7 @@
  */
 
 #include <zephyr/kernel.h>
+#include <zephyr/timestamp.h>
 #include "utils.h"
 #include "timing_sc.h"
 

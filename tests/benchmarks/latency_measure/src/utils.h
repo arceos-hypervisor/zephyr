@@ -14,7 +14,6 @@
 #include <zephyr/timing/timing.h>
 #include <zephyr/sys/printk.h>
 #include <stdio.h>
-#include <zephyr/timestamp.h>
 #include <zephyr/app_memory/app_memdomain.h>
 
 #define START_STACK_SIZE (1024 + CONFIG_TEST_EXTRA_STACK_SIZE)

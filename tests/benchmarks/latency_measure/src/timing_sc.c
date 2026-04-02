@@ -21,18 +21,10 @@ BENCH_BMEM uint64_t user_timestamp_overhead;
 
 #define OVERHEAD_CALC_ITER 10
 
-timing_t z_impl_timing_timestamp_get(void)
+timing_t timing_timestamp_get(void)
 {
 	return timing_counter_get();
 }
-
-#ifdef CONFIG_USERSPACE
-timing_t z_vrfy_timing_timestamp_get(void)
-{
-	return z_impl_timing_timestamp_get();
-}
-#include <zephyr/syscalls/timing_timestamp_get_mrsh.c>
-#endif
 
 static void start_thread_entry(void *p1, void *p2, void *p3)
 {
