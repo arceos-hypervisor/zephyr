@@ -8,3 +8,11 @@ source "Kconfig.zephyr"
 config BENCHMARK_NUM_ITERATIONS
 	int "Number of iterations to gather data"
 	default 1000
+
+config BENCHMARK_SKIP_THREAD_YIELD
+	bool "Skip k_yield thread switch benchmarks"
+	default n
+
+config BENCHMARK_SKIP_INT_TO_THREAD
+	bool "Skip interrupt-to-thread latency benchmarks"
+	default n

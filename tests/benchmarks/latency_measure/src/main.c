@@ -111,13 +111,17 @@ static void test_thread(void *arg1, void *arg2, void *arg3)
 
 	timestamp_overhead_init(CONFIG_BENCHMARK_NUM_ITERATIONS);
 
+#if !CONFIG_BENCHMARK_SKIP_THREAD_YIELD
 	/* Preemptive threads context switching */
 	thread_switch_yield(CONFIG_BENCHMARK_NUM_ITERATIONS, false);
 
 	/* Cooperative threads context switching */
 	thread_switch_yield(CONFIG_BENCHMARK_NUM_ITERATIONS, true);
+#endif
 
+#if !CONFIG_BENCHMARK_SKIP_INT_TO_THREAD
 	int_to_thread(CONFIG_BENCHMARK_NUM_ITERATIONS);
+#endif
 
 	/* Thread creation, starting, suspending, resuming and aborting. */
 

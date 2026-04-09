@@ -1,0 +1,93 @@
+/dts-v1/;
+
+/ {
+	#address-cells = <2>;
+	#size-cells = <2>;
+	model = "Phytium Pi AxVisor Guest";
+	compatible = "phytium,pe2204", "phytium,phytiumpi-axvisor-guest";
+
+	psci {
+		compatible = "arm,psci-0.2";
+		method = "smc";
+	};
+
+	chosen {
+		zephyr,console = &uart0;
+		zephyr,shell-uart = &uart0;
+		zephyr,sram = &sram0;
+		zephyr,flash = &flash0;
+		stdout-path = "serial0:115200n8";
+	};
+
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		cpu@0 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a53";
+			reg = <0>;
+		};
+	};
+
+	timer {
+		compatible = "arm,armv8-timer";
+		interrupt-parent = <&gic>;
+		interrupts = <1 13 8 0>,
+			     <1 14 8 0>,
+			     <1 11 8 0>,
+			     <1 10 8 0>;
+		clock-frequency = <50000000>;
+	};
+
+	uartclk: apb-pclk {
+		compatible = "fixed-clock";
+		clock-frequency = <100000000>;
+		#clock-cells = <0>;
+	};
+
+	soc {
+		#address-cells = <2>;
+		#size-cells = <2>;
+		compatible = "simple-bus";
+		ranges;
+		interrupt-parent = <&gic>;
+
+		gic: interrupt-controller@30800000 {
+			compatible = "arm,gic-v3", "arm,gic";
+			reg = <0x00 0x30800000 0x00 0x00020000>,
+			      <0x00 0x30880000 0x00 0x00080000>;
+			interrupt-controller;
+			#interrupt-cells = <4>;
+			#address-cells = <2>;
+			#size-cells = <2>;
+			status = "okay";
+		};
+
+		uart0: uart@2800d000 {
+			compatible = "arm,pl011";
+			reg = <0x00 0x2800d000 0x00 0x1000>;
+			interrupts = <0 84 4 0>;
+			interrupt-names = "irq_0";
+			clocks = <&uartclk>;
+			current-speed = <115200>;
+			status = "okay";
+		};
+
+		/*
+		 * Match AxVisor's guest RAM window on the Phytium Pi path so the
+		 * Zephyr image links directly into the guest physical address space.
+		 */
+		sram0: memory@2020000000 {
+			device_type = "memory";
+			compatible = "mmio-sram";
+			reg = <0x20 0x20000000 0x00 0x20000000>;
+		};
+
+		flash0: flash@0 {
+			compatible = "cfi-flash";
+			bank-width = <4>;
+			reg = <0x0 0x0 0x0 0x04000000>;
+		};
+	};
+};
