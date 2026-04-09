@@ -1,0 +1,39 @@
+if BOARD_PHYTIUMPI_AXVISOR_GUEST
+
+config BUILD_OUTPUT_BIN
+	default y
+
+config MAIN_STACK_SIZE
+	default 4096
+
+config ARMV8_A_NS
+	default y
+
+config XIP
+	default n
+
+config FLASH_SIZE
+	default 0
+
+config FLASH_BASE_ADDRESS
+	default 0x0
+
+config SERIAL
+	default y
+
+config CONSOLE
+	default y
+
+config UART_CONSOLE
+	default y
+
+config UART_INTERRUPT_DRIVEN
+	default y
+
+config CACHE_MANAGEMENT
+	default y
+
+config TIMER_READS_ITS_FREQUENCY_AT_RUNTIME
+	default y
+
+endif # BOARD_PHYTIUMPI_AXVISOR_GUEST

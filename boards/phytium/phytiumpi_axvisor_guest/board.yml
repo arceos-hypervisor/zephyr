@@ -1,0 +1,6 @@
+board:
+  name: phytiumpi_axvisor_guest
+  full_name: Phytium Pi AxVisor Guest
+  vendor: phytium
+  socs:
+  - name: qemu_cortex_a53
